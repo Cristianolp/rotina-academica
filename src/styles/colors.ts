@@ -12,6 +12,7 @@ export const colors = {
   },
 
   background: {
+    primary: "#FAF8FF",
     gray: "#E7E7F3",
     red: "#FFDBCD",
     green: "#6BFF8F",
