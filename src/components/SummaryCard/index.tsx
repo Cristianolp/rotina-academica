@@ -17,7 +17,7 @@ export function SummaryCard() {
 
       <View style={styles.content}>
         <Text style={styles.titleContent}>Pendências</Text>
-        <Text style={styles.subtitleContent}>Para esta semana</Text>
+        <Text style={styles.subtitle}>Para esta semana</Text>
       </View>
     </View>
   );

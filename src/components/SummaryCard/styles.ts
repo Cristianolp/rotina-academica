@@ -9,15 +9,17 @@ export const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 12,
   },
+
   row: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
+
   textRow: {
     color: colors.orange,
     fontFamily: fontFamily.semibold,
-    fontSize: textSize.subtitle,
+    fontSize: textSize.Label,
     marginTop: Platform.OS === "android" ? -3 : -1,
   },
 
@@ -31,8 +33,8 @@ export const styles = StyleSheet.create({
     fontSize: textSize.dashboard.title,
   },
 
-  subtitleContent: {
-    color: colors.text.primary,
+  subtitle: {
+    color: colors.text.secondary,
     fontFamily: fontFamily.regular,
     fontSize: textSize.dashboard.subtitle,
   },
