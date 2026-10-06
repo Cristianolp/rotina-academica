@@ -1,3 +1,4 @@
+import { SummaryCard } from "@/components/SummaryCard";
 import { styles } from "@/screens/index-style";
 import { Text } from "expo-router/build/react-navigation";
 import { View } from "react-native";
@@ -11,6 +12,8 @@ export default function Index() {
           <Text style={styles.title}>Olá, estudante!</Text>
           <Text style={styles.subtitle}>Organize sua rotina acadêmica.</Text>
         </View>
+
+        <SummaryCard />
       </View>
     </View>
   );
