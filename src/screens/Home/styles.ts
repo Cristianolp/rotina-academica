@@ -1,7 +1,8 @@
+/** Estilos da tela Início. */
 import { colors } from "@/styles/colors";
 import { fontFamily } from "@/styles/fontFamily";
 import { textSize } from "@/styles/textSize";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,19 +11,13 @@ export const styles = StyleSheet.create({
   },
 
   content: {
-    paddingTop: Platform.OS === "android" ? 54 : 64,
-    paddingHorizontal: 24,
+    paddingTop: 8,
+    paddingHorizontal: 20,
+    paddingBottom: 32,
   },
 
   titleContent: {
-    marginTop: 28,
-    marginBottom: 32,
-  },
-
-  label: {
-    fontSize: textSize.label,
-    fontFamily: fontFamily.semiBold,
-    color: colors.primary,
+    marginBottom: 24,
   },
 
   title: {
@@ -33,17 +28,57 @@ export const styles = StyleSheet.create({
 
   subtitle: {
     color: colors.text.secondary,
-    fontSize: textSize.subtitle,
+    fontSize: textSize.body,
     fontFamily: fontFamily.regular,
   },
 
   cardContent: {
     flexDirection: "row",
-    gap: 16,
-    paddingTop: 32,
+    gap: 12,
+    paddingTop: 12,
   },
 
   card: {
     flex: 1,
+  },
+
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 28,
+    marginBottom: 12,
+  },
+
+  sectionTitle: {
+    color: colors.text.primary,
+    fontSize: textSize.dashboard.title,
+    fontFamily: fontFamily.semiBold,
+  },
+
+  sectionLink: {
+    color: colors.primary,
+    fontSize: textSize.small,
+    fontFamily: fontFamily.semiBold,
+  },
+
+  list: {
+    gap: 12,
+  },
+
+  empty: {
+    color: colors.text.secondary,
+    fontSize: textSize.body,
+    fontFamily: fontFamily.regular,
+    textAlign: "center",
+    paddingVertical: 16,
+  },
+
+  iconBox: {
+    width: 22,
+    height: 22,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

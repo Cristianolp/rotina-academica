@@ -1,63 +1,24 @@
-import {
-  AntDesign,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+/**
+ * Layout das abas — define as 4 abas (Início, Disciplinas, Atividades, Perfil)
+ * e usa a barra de abas personalizada (components/TabBar).
+ */
+import { TabBar } from "@/components/TabBar";
+import { colors } from "@/styles/colors";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
     <Tabs
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "blue",
+        sceneStyle: { backgroundColor: colors.background.primary },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Início",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={28} color={color} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="discipline"
-        options={{
-          title: "Disciplinas",
-          tabBarIcon: ({ color }) => (
-            <AntDesign size={24} name="book" color={color} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="activity"
-        options={{
-          title: "Atividades",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              size={28}
-              name="clipboard-list-outline"
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Perfil",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons size={28} name="account-circle" color={color} />
-          ),
-        }}
-      />
+      <Tabs.Screen name="index" options={{ title: "Início" }} />
+      <Tabs.Screen name="discipline" options={{ title: "Disciplinas" }} />
+      <Tabs.Screen name="activities" options={{ title: "Atividades" }} />
+      <Tabs.Screen name="profile" options={{ title: "Perfil" }} />
     </Tabs>
   );
 }

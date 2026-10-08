@@ -1,30 +1,79 @@
-import { Button } from "@/components/button";
+/**
+ * Tela "Minhas Disciplinas" — lista as disciplinas ativas com busca
+ * por nome, professor ou sala e mostra quantas pendências cada uma tem.
+ */
+import { DisciplineCard } from "@/components/DisciplineCard";
+import { Header } from "@/components/Header";
+import { pendingCountFor, useAppStore } from "@/store/AppStore";
 import { colors } from "@/styles/colors";
-import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { FlatList, Text, TextInput, View } from "react-native";
+import { styles } from "./styles";
 
-function login() {
-  console.log("Quero ir para casa");
+/** Deixa o texto minúsculo e sem acentos, para a busca */
+function normalize(text: string) {
+  return text
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
 }
 
-export default function Discipline() {
+export default function Disciplines() {
+  const { disciplines, activities } = useAppStore();
+  const [search, setSearch] = useState("");
+
+  const query = normalize(search.trim());
+  const filtered = disciplines.filter(
+    (discipline) =>
+      discipline.active &&
+      [discipline.name, discipline.professor, discipline.room].some((field) =>
+        normalize(field).includes(query),
+      ),
+  );
+
   return (
-    <View
-      style={{
-        marginTop: 100,
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          paddingHorizontal: 24,
-        }}
-      >
-        <Button
-          text="Salvar atividade"
-          color={colors.primary}
-          onPress={login}
-        />
-      </View>
+    <View style={styles.container}>
+      <Header />
+      <FlatList
+        data={filtered}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <View style={styles.listHeader}>
+            <Text style={styles.title}>Minhas Disciplinas</Text>
+            <View style={styles.search}>
+              <Ionicons name="search" size={18} color={colors.text.secondary} />
+              <TextInput
+                value={search}
+                onChangeText={setSearch}
+                placeholder="Buscar disciplina, professor ou sala..."
+                placeholderTextColor={colors.text.tertiary}
+                style={styles.searchInput}
+              />
+              {search.length > 0 && (
+                <Ionicons
+                  name="close-circle"
+                  size={18}
+                  color={colors.text.tertiary}
+                  onPress={() => setSearch("")}
+                />
+              )}
+            </View>
+          </View>
+        }
+        ListEmptyComponent={
+          <Text style={styles.empty}>Nenhuma disciplina encontrada.</Text>
+        }
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        renderItem={({ item }) => (
+          <DisciplineCard
+            discipline={item}
+            pendingCount={pendingCountFor(activities, item.id)}
+          />
+        )}
+      />
     </View>
   );
 }

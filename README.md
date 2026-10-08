@@ -1,56 +1,101 @@
-# Welcome to your Expo app 👋
+# Minha Rotina
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App de rotina acadêmica feito com Expo (React Native) e uma API em Node.js/Express com MySQL.
 
-## Get started
+## Estrutura
 
-1. Install dependencies
+Cada arquivo começa com um comentário dizendo o que ele faz.
 
-   ```bash
-   npm install
-   ```
+```
+src/
+  app/            rotas (Expo Router) — cada arquivo só aponta para uma tela
+  screens/        telas: uma pasta por tela, com index.tsx + styles.ts
+    Home/  Disciplines/  Activities/  NewActivity/
+    ActivityDetails/  EditActivity/  Profile/  Settings/
+  components/     componentes reutilizáveis: index.tsx + styles.ts
+  store/          estado global (AppStore) que conversa com a API
+  services/       chamadas HTTP para a API
+  utils/          funções de data e regras de status das atividades
+  styles/         cores, fontes e tamanhos de texto
+  types.ts        formato dos dados
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+backend/
+  server.js       sobe o servidor e liga as rotas
+  db.js           conexão com o MySQL
+  routes/         perfil.js, disciplinas.js, atividades.js
+  schema.sql      cria o banco e os dados iniciais
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**Onde mexer:** visual de uma tela → `src/screens/<Tela>/styles.ts`;
+comportamento → `src/screens/<Tela>/index.tsx`; regra da API → `backend/routes/`.
 
-### Other setup steps
+## Rodar no dia a dia
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Com o MySQL ligado no XAMPP, na pasta principal do projeto:
 
-## Learn more
+```bash
+npm run dev
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Esse comando sobe a API e o Expo juntos (as mensagens da API aparecem com `[api]`).
+`Ctrl+C` fecha os dois. As seções abaixo explicam a primeira instalação e cada parte separada.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 1. Banco de dados
 
-## Join the community
+Funciona com o MySQL do **XAMPP** (MariaDB) ou com o MySQL 8.
 
-Join our community of developers creating universal apps.
+**XAMPP:** abra o XAMPP Control Panel, clique em **Start** no MySQL e rode:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+cd backend
+C:\xampp\mysql\bin\mysql.exe -u root --default-character-set=utf8mb4 < schema.sql
+```
+
+Também dá para importar o `schema.sql` pelo phpMyAdmin (aba **Importar**).
+
+> O script apaga e recria o banco `minha_rotina`.
+> Não deixe o serviço MySQL80 do Windows ligado junto com o XAMPP: os dois usam a porta 3306.
+
+## 2. API
+
+```bash
+cd backend
+npm install
+cp .env.example .env   # e preencha DB_PASSWORD com a senha do seu MySQL
+npm start              # ou: npm run dev (reinicia ao salvar)
+```
+
+A API sobe em `http://localhost:3000`.
+
+| Método | Rota                      | Descrição                          |
+| ------ | ------------------------- | ---------------------------------- |
+| GET    | `/perfil`                 | Dados do estudante                 |
+| PUT    | `/perfil`                 | Atualiza nome, curso e semestre    |
+| PUT    | `/perfil/foto`            | Envia a foto de perfil (base64), salva em `backend/uploads/` |
+| DELETE | `/perfil/foto`            | Remove a foto de perfil            |
+| GET    | `/disciplinas`            | Disciplinas ativas                 |
+| GET    | `/atividades`             | Todas as atividades                |
+| GET    | `/atividades/:id`         | Uma atividade                      |
+| POST   | `/atividades`             | Cria atividade                     |
+| PUT    | `/atividades/:id`         | Edita atividade                    |
+| PATCH  | `/atividades/:id/status`  | Muda status (pendente, em_andamento, concluida) |
+| DELETE | `/atividades/:id`         | Exclui atividade                   |
+
+## 3. App
+
+Em outro terminal, na raiz do projeto:
+
+```bash
+npm install
+npx expo start
+```
+
+O app encontra a API sozinho usando o IP do computador que roda o `expo start`
+(porta 3000). Para isso o celular precisa estar **na mesma rede Wi-Fi** do computador,
+e o firewall do Windows precisa liberar o Node na porta 3000.
+
+Para usar outro endereço, crie um `.env` na raiz do app:
+
+```
+EXPO_PUBLIC_API_URL=http://192.168.0.10:3000
+```

@@ -1,5 +1,9 @@
+/**
+ * SummaryCard — card de resumo com número grande (Pendências, Provas,
+ * Disciplinas) usado no Início.
+ */
 import { ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 type SummaryCardProps = {
@@ -8,6 +12,8 @@ type SummaryCardProps = {
   subtitle: string;
   icon: ReactNode;
   textColor: string;
+  decorationColor?: string;
+  onPress?: () => void;
 };
 
 export function SummaryCard({
@@ -16,9 +22,19 @@ export function SummaryCard({
   subtitle,
   icon,
   textColor,
+  decorationColor,
+  onPress,
 }: SummaryCardProps) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      disabled={!onPress}
+      onPress={onPress}
+      style={styles.container}
+    >
+      {decorationColor && (
+        <View style={[styles.decoration, { backgroundColor: decorationColor }]} />
+      )}
       <View style={styles.row}>
         {icon}
         <Text
@@ -36,6 +52,6 @@ export function SummaryCard({
         <Text style={styles.titleContent}>{title}</Text>
         <Text style={styles.subtitleContent}>{subtitle}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
