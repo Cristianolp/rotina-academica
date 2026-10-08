@@ -10,8 +10,9 @@ Cada arquivo começa com um comentário dizendo o que ele faz.
 src/
   app/            rotas (Expo Router) — cada arquivo só aponta para uma tela
   screens/        telas: uma pasta por tela, com index.tsx + styles.ts
-    Home/  Disciplines/  Activities/  NewActivity/
-    ActivityDetails/  EditActivity/  Profile/  Settings/
+    Home/  Disciplines/  DisciplineDetails/  NewDiscipline/
+    Activities/  NewActivity/  ActivityDetails/  EditActivity/
+    Profile/  Settings/
   components/     componentes reutilizáveis: index.tsx + styles.ts
   store/          estado global (AppStore) que conversa com a API
   services/       chamadas HTTP para a API
@@ -74,6 +75,7 @@ A API sobe em `http://localhost:3000`.
 | PUT    | `/perfil/foto`            | Envia a foto de perfil (base64), salva em `backend/uploads/` |
 | DELETE | `/perfil/foto`            | Remove a foto de perfil            |
 | GET    | `/disciplinas`            | Disciplinas ativas                 |
+| POST   | `/disciplinas`            | Cadastra uma disciplina            |
 | GET    | `/atividades`             | Todas as atividades                |
 | GET    | `/atividades/:id`         | Uma atividade                      |
 | POST   | `/atividades`             | Cria atividade                     |

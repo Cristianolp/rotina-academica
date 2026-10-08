@@ -57,6 +57,9 @@ export type PhotoInput = {
   mimeType: string;
 };
 
+/** Disciplina enviada para a API ao cadastrar */
+export type DisciplineInput = Pick<Discipline, "name" | "professor" | "schedule" | "room" | "icon">;
+
 export type ActivityInput = Pick<
   Activity,
   "title" | "disciplineId" | "dueDate" | "priority" | "description"
@@ -71,8 +74,13 @@ export const api = {
     request<Profile>("/perfil/foto", { method: "PUT", body: JSON.stringify(photo) }),
   removeProfilePhoto: () => request<Profile>("/perfil/foto", { method: "DELETE" }),
 
-  /** Disciplinas ativas */
+  /** Disciplinas: listar as ativas e cadastrar */
   getDisciplines: () => request<Discipline[]>("/disciplinas"),
+  createDiscipline: (discipline: DisciplineInput) =>
+    request<Discipline>("/disciplinas", {
+      method: "POST",
+      body: JSON.stringify(discipline),
+    }),
 
   /** Atividades: listar, criar, editar, mudar status e excluir */
   getActivities: () => request<Activity[]>("/atividades"),

@@ -3,7 +3,12 @@
  * Busca os dados na API ao abrir o app e expõe funções para criar,
  * editar e excluir. As telas acessam tudo com useAppStore().
  */
-import { api, type ActivityInput, type PhotoInput } from "@/services/api";
+import {
+  api,
+  type ActivityInput,
+  type DisciplineInput,
+  type PhotoInput,
+} from "@/services/api";
 import type { Activity, ActivityStatus, Discipline, Profile } from "@/types";
 import { daysFromToday } from "@/utils/date";
 import {
@@ -26,6 +31,8 @@ type AppStore = State & {
   error: string | null;
   /** Busca tudo de novo na API (botão "Tentar novamente") */
   reload: () => Promise<void>;
+  /** Cadastra uma disciplina na API e adiciona na lista */
+  addDiscipline: (discipline: DisciplineInput) => Promise<Discipline>;
   /** Cria uma atividade na API e adiciona na lista */
   addActivity: (activity: ActivityInput) => Promise<void>;
   /** Salva as alterações de uma atividade */
@@ -104,6 +111,16 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     loaded,
     error,
     reload,
+    addDiscipline: async (discipline) => {
+      const created = await api.createDiscipline(discipline);
+      setState((current) => ({
+        ...current,
+        disciplines: [...current.disciplines, created].sort((a, b) =>
+          a.name.localeCompare(b.name, "pt-BR"),
+        ),
+      }));
+      return created;
+    },
     addActivity: async (activity) => {
       const created = await api.createActivity(activity);
       setState((current) => ({
