@@ -6,7 +6,9 @@ import { Platform, StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    padding: 24,
+    paddingVertical: 24,
+    paddingStart: 24,
+    paddingEnd: 16,
     borderRadius: 12,
   },
 
@@ -17,9 +19,8 @@ export const styles = StyleSheet.create({
   },
 
   textRow: {
-    color: colors.orange,
-    fontFamily: fontFamily.semibold,
-    fontSize: textSize.Label,
+    fontFamily: fontFamily.semiBold,
+    fontSize: textSize.label,
     marginTop: Platform.OS === "android" ? -3 : -1,
   },
 
@@ -29,11 +30,11 @@ export const styles = StyleSheet.create({
 
   titleContent: {
     color: colors.text.primary,
-    fontFamily: fontFamily.semibold,
+    fontFamily: fontFamily.semiBold,
     fontSize: textSize.dashboard.title,
   },
 
-  subtitle: {
+  subtitleContent: {
     color: colors.text.secondary,
     fontFamily: fontFamily.regular,
     fontSize: textSize.dashboard.subtitle,

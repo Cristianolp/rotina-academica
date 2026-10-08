@@ -3,7 +3,7 @@ export const colors = {
   orange: "#BC4800",
   red: "#BA1A1A",
   white: "#FFFFFF",
-  green: "#006E2F",
+  green: "#006400",
 
   text: {
     primary: "#191B23",
@@ -14,7 +14,7 @@ export const colors = {
   background: {
     primary: "#FAF8FF",
     gray: "#E7E7F3",
-    red: "#FFDBCD",
+    red: "#FFD8CD",
     green: "#6BFF8F",
     blue: "#EDEDF9",
   },

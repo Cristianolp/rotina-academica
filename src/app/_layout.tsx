@@ -1,4 +1,3 @@
-import { Loading } from "@/components/Loading";
 import {
   Manrope_300Light,
   Manrope_400Regular,
@@ -8,6 +7,7 @@ import {
 } from "@expo-google-fonts/manrope";
 import { Stack } from "expo-router";
 import { Text, View } from "react-native";
+import { Loading } from "../components/Loading";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({

@@ -1,16 +1,18 @@
-import { colors } from "@/styles/colors";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary,
         headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "blue",
       }}
     >
       <Tabs.Screen
@@ -18,10 +20,11 @@ export default function TabLayout() {
         options={{
           title: "Início",
           tabBarIcon: ({ color }) => (
-            <Ionicons size={24} name="home" color={color} />
+            <Ionicons name="home-outline" size={28} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="discipline"
         options={{
@@ -31,14 +34,15 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="activity"
         options={{
           title: "Atividades",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              size={24}
-              name="clipboard-text-outline"
+              size={28}
+              name="clipboard-list-outline"
               color={color}
             />
           ),
@@ -50,7 +54,7 @@ export default function TabLayout() {
         options={{
           title: "Perfil",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons size={30} name="person-outline" color={color} />
+            <MaterialIcons size={28} name="account-circle" color={color} />
           ),
         }}
       />

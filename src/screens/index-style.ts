@@ -15,25 +15,35 @@ export const styles = StyleSheet.create({
   },
 
   titleContent: {
-    paddingTop: 28,
+    marginTop: 28,
     marginBottom: 32,
   },
 
   label: {
-    fontSize: textSize.Label,
-    fontFamily: fontFamily.semibold,
+    fontSize: textSize.label,
+    fontFamily: fontFamily.semiBold,
     color: colors.primary,
   },
 
   title: {
-    fontSize: textSize.title,
-    fontFamily: fontFamily.semibold,
     color: colors.text.primary,
+    fontSize: textSize.title,
+    fontFamily: fontFamily.semiBold,
   },
 
   subtitle: {
+    color: colors.text.secondary,
     fontSize: textSize.subtitle,
     fontFamily: fontFamily.regular,
-    color: colors.text.secondary,
+  },
+
+  cardContent: {
+    flexDirection: "row",
+    gap: 16,
+    paddingTop: 32,
+  },
+
+  card: {
+    flex: 1,
   },
 });
