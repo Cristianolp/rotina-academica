@@ -50,6 +50,7 @@ function RootNavigator() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="details/[id]" />
         <Stack.Screen name="edit/[id]" />
+        <Stack.Screen name="disciplines/new" />
         <Stack.Screen name="disciplines/[id]" />
         <Stack.Screen name="settings" />
       </Stack>

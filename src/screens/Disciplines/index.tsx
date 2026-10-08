@@ -1,14 +1,16 @@
 /**
  * Tela "Minhas Disciplinas" — lista as disciplinas ativas com busca
  * por nome, professor ou sala e mostra quantas pendências cada uma tem.
+ * O botão + no fim da lista abre a Nova Disciplina.
  */
 import { DisciplineCard } from "@/components/DisciplineCard";
 import { Header } from "@/components/Header";
 import { pendingCountFor, useAppStore } from "@/store/AppStore";
 import { colors } from "@/styles/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
-import { FlatList, Text, TextInput, View } from "react-native";
+import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 /** Deixa o texto minúsculo e sem acentos, para a busca */
@@ -73,6 +75,18 @@ export default function Disciplines() {
             pendingCount={pendingCountFor(activities, item.id)}
           />
         )}
+        ListFooterComponent={
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => router.push("/disciplines/new")}
+            style={styles.addBox}
+            accessibilityLabel="Nova disciplina"
+          >
+            <View style={styles.addButton}>
+              <Ionicons name="add" size={26} color={colors.white} />
+            </View>
+          </TouchableOpacity>
+        }
       />
     </View>
   );

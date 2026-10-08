@@ -1,0 +1,10 @@
+/** Estilos da tela Nova Disciplina. */
+import { colors } from "@/styles/colors";
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background.primary,
+  },
+});

@@ -52,4 +52,25 @@ export const styles = StyleSheet.create({
   separator: {
     height: 14,
   },
+
+  // Caixa tracejada com o botão + (igual à tela de Atividades)
+  addBox: {
+    marginTop: 20,
+    height: 96,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: colors.border,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  addButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
