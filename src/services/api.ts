@@ -20,18 +20,34 @@ function resolveBaseUrl() {
 
 export const API_URL = resolveBaseUrl();
 
+/** Tempo máximo de espera por uma resposta da API (a foto tem mais tempo) */
+const TIMEOUT_MS = 10_000;
+const PHOTO_TIMEOUT_MS = 60_000;
+
 /** Faz a requisição HTTP e transforma erros da API em mensagens legíveis */
-async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+async function request<T>(
+  path: string,
+  options: RequestInit = {},
+  timeoutMs = TIMEOUT_MS,
+): Promise<T> {
+  // Sem limite, o app ficaria esperando para sempre quando a API não responde
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
   let response: Response;
   try {
     response = await fetch(`${API_URL}${path}`, {
       ...options,
+      signal: controller.signal,
       headers: { "Content-Type": "application/json", ...options.headers },
     });
   } catch {
     throw new Error(
-      `Não foi possível conectar à API em ${API_URL}. Verifique se o backend está rodando.`,
+      `Não foi possível conectar à API em ${API_URL}. Verifique se o backend está rodando ` +
+        "e se o celular está na mesma rede Wi-Fi do computador.",
     );
+  } finally {
+    clearTimeout(timer);
   }
 
   if (response.status === 204) return undefined as T;
@@ -71,7 +87,11 @@ export const api = {
   updateProfile: (profile: Profile) =>
     request<Profile>("/perfil", { method: "PUT", body: JSON.stringify(profile) }),
   uploadProfilePhoto: (photo: PhotoInput) =>
-    request<Profile>("/perfil/foto", { method: "PUT", body: JSON.stringify(photo) }),
+    request<Profile>(
+      "/perfil/foto",
+      { method: "PUT", body: JSON.stringify(photo) },
+      PHOTO_TIMEOUT_MS,
+    ),
   removeProfilePhoto: () => request<Profile>("/perfil/foto", { method: "DELETE" }),
 
   /** Disciplinas: listar as ativas e cadastrar */
